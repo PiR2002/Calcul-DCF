@@ -3,6 +3,15 @@ import pandas as pd
 import streamlit as st
 
 def calculate_dcf(fcf_list, wacc, g, start_year):
+    """
+    Calcule la valeur actuelle nette d'une entreprise avec la méthode DCF.
+
+    :param fcf_list: Liste des Free Cash Flows projetés (ex: [100, 110, 121, ...])
+    :param wacc: Taux d'actualisation (ex: 0.10 pour 10%)
+    :param g: Taux de croissance à long terme (ex: 0.02 pour 2%)
+    :param start_year: Année de début de projection (ex: 2025)
+    :return: DataFrame avec les résultats et valeur totale du DCF
+    """
     n_years = len(fcf_list)
     terminal_value = fcf_list[-1] * (1 + g) / (wacc - g)
 
@@ -22,6 +31,7 @@ def calculate_dcf(fcf_list, wacc, g, start_year):
 
     return df, dcf_total
 
+# Interface utilisateur Streamlit
 st.title("Calculateur DCF - Discounted Cash Flow")
 
 start_year = st.number_input("Année de départ", min_value=2000, max_value=2100, value=2025)
